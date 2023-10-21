@@ -1,0 +1,32 @@
+*
+!/**/
+!*.*
+
+# Ignore compiled object files and executables
+*.o
+*.hi
+*.chi
+*.chs.h
+*.dyn_o
+*.dyn_hi
+*.exe
+
+# Ignore Cabal build files
+dist/
+dist-newstyle/
+
+# Ignore Haddock documentation
+doc/
+
+# Ignore editor files
+*~
+\#*\#
+\.#*
+*.swp
+*.bak
+*.backup
+*.orig
+
+# Ignore system files
+.DS_Store
+Thumbs.db
