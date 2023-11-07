@@ -15,3 +15,17 @@ toDigitsTest =
         , null (toDigits 0)
         , null (toDigits (-17))
         ]
+
+toDigitsRev :: Integer -> [Integer]
+toDigitsRev n
+    | n <= 0 = []
+    | otherwise = n `mod` 10 : toDigitsRev (n `div` 10)
+
+toDigitsRevTest :: Bool
+toDigitsRevTest =
+    and
+        [ [1] == toDigitsRev 1
+        , [4, 3, 2, 1] == toDigitsRev 1234
+        , null (toDigitsRev 0)
+        , null (toDigitsRev (-17))
+        ]

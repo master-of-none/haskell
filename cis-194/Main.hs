@@ -4,5 +4,7 @@ import CreditCard
 
 main :: IO ()
 main = do
-    let testResult = toDigitsTest
-    putStrLn $ "Test Result is: " ++ show testResult
+    let testResultDigits = toDigitsTest
+    putStrLn $ "Test Result is: " ++ show testResultDigits
+    let testResultDigitsRev = toDigitsRevTest
+    putStrLn $ "Test Result is: " ++ show testResultDigitsRev
