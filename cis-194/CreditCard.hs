@@ -2,6 +2,7 @@
 
 module CreditCard where
 
+-- Exercise 1 --
 toDigits :: Integer -> [Integer]
 toDigits n
     | n <= 0 = []
@@ -29,3 +30,7 @@ toDigitsRevTest =
         , null (toDigitsRev 0)
         , null (toDigitsRev (-17))
         ]
+
+-- Exercise 2 --
+doubleEveryOther :: [Integer] -> [Integer]
+doubleEveryOther = reverse . zipWith (*) (cycle [1, 2]) . reverse
