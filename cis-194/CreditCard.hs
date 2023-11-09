@@ -34,3 +34,12 @@ toDigitsRevTest =
 -- Exercise 2 --
 doubleEveryOther :: [Integer] -> [Integer]
 doubleEveryOther = reverse . zipWith (*) (cycle [1, 2]) . reverse
+
+doubleEveryOtherTest :: Bool
+doubleEveryOtherTest =
+    and
+        [ [1] == doubleEveryOther [1]
+        , [6, 4] == doubleEveryOther [3, 4]
+        , [1, 4, 3] == doubleEveryOther [1, 2, 3]
+        , [16, 7, 12, 5] == doubleEveryOther [8, 7, 6, 5]
+        ]
