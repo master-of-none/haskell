@@ -5,6 +5,8 @@ import CreditCard
 main :: IO ()
 main = do
     let testResultDigits = toDigitsTest
-    putStrLn $ "Test Result is: " ++ show testResultDigits
+    putStrLn $ "Test Result 1 is: " ++ show testResultDigits
     let testResultDigitsRev = toDigitsRevTest
-    putStrLn $ "Test Result is: " ++ show testResultDigitsRev
+    putStrLn $ "Test Result 2 is: " ++ show testResultDigitsRev
+    let testDoubleEveryDigit = doubleEveryOtherTest
+    putStrLn $ "Test Result 3 is: " ++ show testDoubleEveryDigit
