@@ -43,3 +43,17 @@ doubleEveryOtherTest =
         , [1, 4, 3] == doubleEveryOther [1, 2, 3]
         , [16, 7, 12, 5] == doubleEveryOther [8, 7, 6, 5]
         ]
+
+-- Exercise 3 --
+sumDigits :: [Integer] -> Integer
+sumDigits = sum . concatMap toDigits
+
+sumDigitsTest :: Bool
+sumDigitsTest = 
+    and 
+    [
+        1 == sumDigits [1],
+        10 == sumDigits [6, 4],
+        6 == sumDigits [1, 2, 3],
+        22 == sumDigits [16, 7, 12, 5]
+    ]

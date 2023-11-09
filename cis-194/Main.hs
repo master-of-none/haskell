@@ -10,3 +10,5 @@ main = do
     putStrLn $ "Test Result 2 is: " ++ show testResultDigitsRev
     let testDoubleEveryDigit = doubleEveryOtherTest
     putStrLn $ "Test Result 3 is: " ++ show testDoubleEveryDigit
+    let testSumDigits = sumDigitsTest
+    putStrLn $ "Test Result 4 is: " ++ show testSumDigits
