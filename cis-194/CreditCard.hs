@@ -1,4 +1,7 @@
 {-# OPTIONS_GHC -Wall #-}
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Redundant ==" #-}
+{-# HLINT ignore "Use &&" #-}
 
 module CreditCard where
 
@@ -55,4 +58,14 @@ sumDigitsTest =
         , 10 == sumDigits [6, 4]
         , 6 == sumDigits [1, 2, 3]
         , 22 == sumDigits [16, 7, 12, 5]
+        ]
+
+validate :: Integer -> Bool
+validate n = (sumDigits . doubleEveryOther . toDigits) n `mod` 10 == 0
+
+validateTest :: Bool
+validateTest =
+    and
+        [ True == validate 4012888888881881
+        , False == validate 4012888888881882
         ]
