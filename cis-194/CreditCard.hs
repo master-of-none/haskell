@@ -49,11 +49,10 @@ sumDigits :: [Integer] -> Integer
 sumDigits = sum . concatMap toDigits
 
 sumDigitsTest :: Bool
-sumDigitsTest = 
-    and 
-    [
-        1 == sumDigits [1],
-        10 == sumDigits [6, 4],
-        6 == sumDigits [1, 2, 3],
-        22 == sumDigits [16, 7, 12, 5]
-    ]
+sumDigitsTest =
+    and
+        [ 1 == sumDigits [1]
+        , 10 == sumDigits [6, 4]
+        , 6 == sumDigits [1, 2, 3]
+        , 22 == sumDigits [16, 7, 12, 5]
+        ]
