@@ -1,6 +1,7 @@
 module Main where
 
 import CreditCard
+import Hanoi
 
 main :: IO ()
 main = do
@@ -14,3 +15,5 @@ main = do
     putStrLn $ "Test Result 4 is: " ++ show testSumDigits
     let testValidate = validateTest
     putStrLn $ "Test Result 5 is: " ++ show testValidate
+    let testHanoi = hanoiTest
+    putStrLn $ "Test reult 6 is: " ++ show testHanoi
