@@ -61,7 +61,23 @@ insertTest = and
         Node (Node Leaf info Leaf) warning Leaf == insert info warningTree
     ]
     where 
-        info = LogMessage Info 30 "does not matter"
+        info = LogMessage Info 30 "Some info"
         infoTree = Node Leaf info Leaf
-        warning = LogMessage Warning 50 "does not matter"
+        warning = LogMessage Warning 50 "Some warning"
         warningTree = Node Leaf warning Leaf
+
+-- Exercise 3 --
+build :: [LogMessage] -> MessageTree
+build = foldr insert Leaf
+
+buildTest :: Bool
+buildTest = and
+    [
+        Node Leaf info Leaf == build [info],
+        Node (Node Leaf info Leaf) warning Leaf == build [info, warning],
+        Node Leaf info (Node Leaf warning Leaf) == build [warning, info, unknown]
+    ]
+    where 
+        info = LogMessage Info 10 "Some information"
+        warning = LogMessage Warning 20 "Some warning"
+        unknown = Unknown "Some unknown"
