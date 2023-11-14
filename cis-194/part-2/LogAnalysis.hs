@@ -1,4 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use &&" #-}
 
 module LogAnalysis where
 
@@ -40,3 +42,26 @@ parseMessageTest = and
 -- Whole File parsing --
 parse :: String -> [LogMessage]
 parse file = parseMessage <$> lines file
+
+-- Exercise 2 --
+insert :: LogMessage -> MessageTree -> MessageTree
+insert (Unknown _) tree = tree
+insert msg Leaf = Node Leaf msg Leaf
+insert msg@(LogMessage _ ts1 _) (Node left msg2@(LogMessage _ ts2 _) right)
+    | ts1 < ts2 = Node(insert msg left) msg2 right
+    | otherwise = Node left msg2 (insert msg right)
+insert _(Node _ (Unknown _) _) =
+        error "Cannot insert Unknown message to Message Tree"
+
+insertTest :: Bool
+insertTest = and
+    [
+        Node Leaf info Leaf == insert info Leaf,
+        Node Leaf info (Node Leaf warning Leaf) == insert warning infoTree,
+        Node (Node Leaf info Leaf) warning Leaf == insert info warningTree
+    ]
+    where 
+        info = LogMessage Info 30 "does not matter"
+        infoTree = Node Leaf info Leaf
+        warning = LogMessage Warning 50 "does not matter"
+        warningTree = Node Leaf warning Leaf
