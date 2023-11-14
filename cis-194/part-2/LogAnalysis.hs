@@ -4,23 +4,23 @@
 
 module LogAnalysis where
 
-import Log 
+import Log
 
 -- Exercise 1 --
 createInfoMessage :: [String] -> LogMessage
-createInfoMessage (timestamp:content) = 
+createInfoMessage (timestamp:content) =
     LogMessage Info (read timestamp) (unwords content)
 createInfoMessage msg = error ("Invalid Info: " ++ unwords msg)
 
 createWarningMessage :: [String] -> LogMessage
-createWarningMessage (timestamp:content) = 
+createWarningMessage (timestamp:content) =
     LogMessage Warning (read timestamp) (unwords content)
 createWarningMessage msg = error ("Invalid Warning: " ++ unwords msg)
 
 createErrorMessage :: [String] -> LogMessage
 createErrorMessage (severity:timestamp:content) =
     LogMessage (Error (read severity)) (read timestamp) (unwords content)
-createErrorMessage msg = error("Invalid Error: " ++ unwords msg)
+createErrorMessage msg = error ("Invalid Error: " ++ unwords msg)
 
 createUnknownMessage :: [String] -> LogMessage
 createUnknownMessage msg = Unknown (unwords msg)
@@ -48,7 +48,7 @@ insert :: LogMessage -> MessageTree -> MessageTree
 insert (Unknown _) tree = tree
 insert msg Leaf = Node Leaf msg Leaf
 insert msg@(LogMessage _ ts1 _) (Node left msg2@(LogMessage _ ts2 _) right)
-    | ts1 < ts2 = Node(insert msg left) msg2 right
+    | ts1 < ts2 = Node (insert msg left) msg2 right
     | otherwise = Node left msg2 (insert msg right)
 insert _(Node _ (Unknown _) _) =
         error "Cannot insert Unknown message to Message Tree"
@@ -60,7 +60,7 @@ insertTest = and
         Node Leaf info (Node Leaf warning Leaf) == insert warning infoTree,
         Node (Node Leaf info Leaf) warning Leaf == insert info warningTree
     ]
-    where 
+    where
         info = LogMessage Info 30 "Some info"
         infoTree = Node Leaf info Leaf
         warning = LogMessage Warning 50 "Some warning"
@@ -77,7 +77,7 @@ buildTest = and
         Node (Node Leaf info Leaf) warning Leaf == build [info, warning],
         Node Leaf info (Node Leaf warning Leaf) == build [warning, info, unknown]
     ]
-    where 
+    where
         info = LogMessage Info 10 "Some information"
         warning = LogMessage Warning 20 "Some warning"
         unknown = Unknown "Some unknown"
@@ -91,8 +91,34 @@ inOrderTest :: Bool
 inOrderTest = and
     [
         [info] == inOrder (Node Leaf info Leaf),
-        [info, warning] == inOrder(Node (Node Leaf info Leaf) warning Leaf)
+        [info, warning] == inOrder (Node (Node Leaf info Leaf) warning Leaf)
     ]
     where
         info = LogMessage Info 10 "Some information"
         warning = LogMessage Warning 20 "Some warning"
+
+-- Exercise 5 --
+isRelevant :: LogMessage -> Bool
+isRelevant (LogMessage (Error severity) _ _) = severity >= 50
+isRelevant _ = False
+
+getContent :: LogMessage -> String
+getContent (LogMessage _ _ content) = content
+getContent (Unknown content) = content
+
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong xs = getContent <$> filter isRelevant (inOrder . build $ xs)
+
+whatWentWrongTest :: Bool
+whatWentWrongTest = and
+    [
+        null (whatWentWrong [info, warning, error1]),
+        ["Second error"] == whatWentWrong [info, warning, error2],
+        ["Second error", "Third error"] == whatWentWrong [error1, error2, error3]
+    ]
+    where
+        info = LogMessage Info 10 "Some information"
+        warning = LogMessage Warning 20 "Some warning"
+        error1 = LogMessage (Error 20) 1 "First error"
+        error2 = LogMessage (Error 60) 2 "Second error"
+        error3 = LogMessage (Error 80) 3 "Third error"
