@@ -10,3 +10,5 @@ main = do
     putStrLn $ "The test result 2 is: " ++ show testResult2
     let testResult3 = buildTest
     putStrLn $ "The test result 3 is: " ++ show testResult3
+    let testResult4 = inOrderTest
+    putStrLn $ "The test result 4 is: " ++ show testResult4

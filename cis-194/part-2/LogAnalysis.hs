@@ -81,3 +81,18 @@ buildTest = and
         info = LogMessage Info 10 "Some information"
         warning = LogMessage Warning 20 "Some warning"
         unknown = Unknown "Some unknown"
+
+-- Exercise 4 --
+inOrder :: MessageTree -> [LogMessage]
+inOrder Leaf = []
+inOrder (Node left root right) = inOrder left ++ [root] ++ inOrder right
+
+inOrderTest :: Bool
+inOrderTest = and
+    [
+        [info] == inOrder (Node Leaf info Leaf),
+        [info, warning] == inOrder(Node (Node Leaf info Leaf) warning Leaf)
+    ]
+    where
+        info = LogMessage Info 10 "Some information"
+        warning = LogMessage Warning 20 "Some warning"
