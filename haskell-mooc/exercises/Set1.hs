@@ -12,6 +12,9 @@
 --   * basic expressions
 --   * pattern matching
 --   * recursion
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+
+{-# HLINT ignore "Use even" #-}
 
 module Set1 where
 
@@ -32,6 +35,7 @@ two = 2
 
 double :: Integer -> Integer
 double x = x * 2
+
 ------------------------------------------------------------------------------
 -- Ex 3: define the function quadruple that uses the function double
 -- from the previous exercise to return its argument multiplied by
@@ -39,6 +43,7 @@ double x = x * 2
 
 quadruple :: Integer -> Integer
 quadruple x = double (double x)
+
 ------------------------------------------------------------------------------
 -- Ex 4: define the function distance. It should take four arguments of
 -- type Double: x1, y1, x2, and y2 and return the (euclidean) distance
@@ -55,7 +60,7 @@ quadruple x = double (double x)
 
 distance :: Double -> Double -> Double -> Double -> Double
 distance x1 y1 x2 y2 =
-    sqrt ((x1 - x2) ^2 + (y1 - y2)^2)
+    sqrt ((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
 
 ------------------------------------------------------------------------------
 -- Ex 5: define the function eeny that returns "eeny" for even inputs
@@ -64,7 +69,7 @@ distance x1 y1 x2 y2 =
 -- Ps. have a look at the built in function "even"
 
 eeny :: Integer -> String
-eeny x = if x `mod` 2 == 0 then "eeny" else "meeny" 
+eeny x = if x `mod` 2 == 0 then "eeny" else "meeny"
 
 ------------------------------------------------------------------------------
 -- Ex 6: here's the function checkPassword from the course material.
@@ -72,9 +77,10 @@ eeny x = if x `mod` 2 == 0 then "eeny" else "meeny"
 -- "mellon".
 
 checkPassword :: String -> String
-checkPassword password = if password == "swordfish" || password == "mellon"
-                         then "You're in."
-                         else "ACCESS DENIED!"
+checkPassword password =
+    if password == "swordfish" || password == "mellon"
+        then "You're in."
+        else "ACCESS DENIED!"
 
 ------------------------------------------------------------------------------
 -- Ex 7: A postal service prices packages the following way.
@@ -86,7 +92,7 @@ checkPassword password = if password == "swordfish" || password == "mellon"
 -- in grams, and returns the cost in credits.
 
 postagePrice :: Int -> Int
-postagePrice gram 
+postagePrice gram
     | gram <= 500 = 250
     | gram <= 5000 = 300 + gram
     | otherwise = 6000
@@ -100,7 +106,7 @@ postagePrice gram
 -- Ps. remember, the type of booleans in haskell is Bool
 
 isZero :: Integer -> Bool
-isZero x 
+isZero x
     | x == 0 = True
     | otherwise = False
 
@@ -111,7 +117,7 @@ isZero x
 
 sumTo :: Integer -> Integer
 sumTo 1 = 1
-sumTo n = n + sumTo(n - 1) 
+sumTo n = n + sumTo (n - 1)
 
 ------------------------------------------------------------------------------
 -- Ex 10: power n k should compute n to the power k (i.e. n^k)
@@ -120,6 +126,7 @@ sumTo n = n + sumTo(n - 1)
 power :: Integer -> Integer -> Integer
 power n 0 = 1
 power n k = n * power n (k - 1)
+
 ------------------------------------------------------------------------------
 -- Ex 11: ilog3 n should be the number of times you can divide given
 -- number by three (rounding down) before you get 0.
@@ -138,4 +145,4 @@ power n k = n * power n (k - 1)
 
 ilog3 :: Integer -> Integer
 ilog3 0 = 0
-ilog3 n = 1 + ilog3 (n `div` 3) 
+ilog3 n = 1 + ilog3 (n `div` 3)
